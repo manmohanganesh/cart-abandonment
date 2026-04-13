@@ -5,3 +5,6 @@ project:
 logging:
   level: INFO
   format: "{time:DD-MM-YYYY HH:mm:ss} | {level} | {message}" 
+
+data:
+  raw_path: data/raw_data/online_shoppers_intention.csv
