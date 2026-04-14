@@ -1,5 +1,6 @@
-from google import genai
+import google.generativeai as genai
 from src.env import get_env_variable
+
 def generate_message(shap_dict):
     """
     shap_dict : dictionary of feature -> contribution
