@@ -16,7 +16,7 @@ def train_model(X_train,y_train):
     model.fit(X_train,y_train)
 
     # SAVE MODEL
-    joblib.dump(model, "artifacts/model.pkl")
-    joblib.dump(X_train.columns, "artifacts/columns.pkl")
+    joblib.dump(model, "models/model.pkl")
+    joblib.dump(X_train.columns, "models/columns.pkl")
 
     return model

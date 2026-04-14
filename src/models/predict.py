@@ -7,8 +7,8 @@ import joblib
 from src.data.features import basic_feature_engineering
 
 def load_model():
-    model = joblib.load("artifacts/model.pkl")
-    columns = joblib.load("artifacts/columns.pkl")
+    model = joblib.load("models/model.pkl")
+    columns = joblib.load("models/columns.pkl")
     return model,columns
 
 def preprocess_input(input_df,columns):
