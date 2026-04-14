@@ -137,7 +137,7 @@ User Behavior Data
 ## 🚀 How to Run
 
 ```bash
-git clone <your-repo-url>
+git clone <https://github.com/manmohanganesh/cart-abandonment.git>
 cd cart-abandonment-system
 
 pip install -r requirements.txt
