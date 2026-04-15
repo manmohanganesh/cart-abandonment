@@ -13,6 +13,10 @@ from src.models.explain import (
 )
 from src.models.train import train_model
 from src.recovery.generator import generate_message, generate_message_llm
+from src.rag.chain import generate_rag_answer
+from src.rag.ingest import load_documents,create_vector_store
+from src.rag.retriever import retrieve_context
+
 
 def main():
     load_env()
@@ -20,6 +24,17 @@ def main():
 
     config = load_config()
     logger = setup_logger(config)
+
+    docs=load_documents("data/external/reviews.txt")
+    vectorstore = create_vector_store(docs)
+
+    query = "Why do users abandon due to price?"
+
+    context = retrieve_context(vectorstore,query)
+    
+    answer = generate_rag_answer(context,query)
+
+    print("\nRAG ANSWER:\n",answer)
 
     env = get_env_variable("ENV")
     logger.info(f"Starting {config['project']['name']} in {env} mode..\n\n")
