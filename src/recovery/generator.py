@@ -1,4 +1,4 @@
-import google.generativeai as genai
+from google import genai
 from src.env import get_env_variable
 
 def generate_message(shap_dict):
@@ -25,8 +25,27 @@ def setup_gemini(config):
     return client
 
 def build_prompt(shap_dict):
-    prompt = "You are an e-commerce assistant helping recover abandoned carts. \n\n"
-    prompt += "User Behavious insights:\n"
+    prompt = f"""
+    You are an expert in e-commerce conversion optimization.
+    A user is likely to abandon their cart.
+    Here are the key behavioral drivers:
+    {shap_dict}
+    Your task:
+    Generate 3 DIFFERENT recovery strategies:
+    1. Discount-based (price sensitivity)
+    2. Urgency-based (fear of missing out)
+    3. Value-based (highlight product benefit)
+    Rules:
+    - Each message must be 1–2 lines
+    - Be persuasive, natural, and human-like
+    - Do NOT sound generic
+    - Tailor message to the given behavior signals
+
+    Output format:
+    1. ...
+    2. ...
+    3. ...
+    """
     
     for feature, values in shap_dict.items():
         prompt += f"- {feature}: {values :.2f}\n"
