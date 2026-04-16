@@ -1,186 +1,240 @@
-# 🛒 Cart Abandonment Intelligence System
+# Cart Abandonment Intelligence System
 
-## 🚀 Overview
+## Overview
 
-Most e-commerce platforms handle cart abandonment with generic reminders like *“You left something in your cart.”*
+Most e-commerce systems handle cart abandonment with generic reminders like “You left something in your cart.”
 
-This project rethinks the problem as a **decision intelligence system** that:
+This project goes beyond that by building a decision intelligence system that:
 
-* Predicts abandonment **before it happens**
-* Explains **why** a user is likely to abandon
-* Simulates **intervention strategies**
-* Generates **personalized recovery messages**
-
----
-
-## 🧠 Core Idea
-
-> Move from *prediction* → *explanation* → *action*
-
-Instead of sending generic notifications, this system enables **context-aware, data-driven interventions**.
+* Predicts abandonment before it happens
+* Explains why each user is likely to abandon
+* Diagnoses behavioral patterns using RAG
+* Simulates intervention strategies
+* Generates personalized recovery messages
 
 ---
 
-## 🧱 System Architecture
+## Key Idea
+
+Don’t just predict abandonment — understand it and act on it intelligently.
+
+---
+
+## System Architecture
 
 ```
-User Behavior Data
+User Session Data
 → Feature Engineering
 → ML Model (XGBoost)
-→ SHAP Explainability
+→ SHAP Explainability (Why THIS user)
+→ RAG Diagnosis (Why USERS LIKE THIS)
 → Decision Layer
-→ Intervention Simulation
+→ What-if Simulation
 → LLM Personalization
-→ Streamlit Dashboard
+→ Multi-page Streamlit Dashboard
 ```
 
 ---
 
-## ⚙️ Features
+## Features
 
-### 🔮 Predictive Modeling
+### 1. Predictive Modeling
 
-* XGBoost classifier trained on session-level behavior data
-* Threshold tuning (0.3) based on business trade-offs
-* Focus on **recall** to minimize missed high-intent users
+* XGBoost classifier trained on session behavior
+* Threshold tuning focused on business impact
+* Optimized for high recall to minimize lost conversions
 
 ---
 
-### 🔍 Explainability (SHAP)
+### 2. Explainability (SHAP)
 
-* Global + local explanations
-* Identifies key drivers per user:
+* Global and local feature importance
+* Per-user reasoning
+* Identifies drivers like:
 
   * Price sensitivity
-  * Engagement metrics
+  * Engagement levels
   * Exit behavior
 
 ---
 
-### 🧠 Decision Intelligence Layer
+### 3. Diagnosis with RAG (Retrieval-Augmented Generation)
 
-* Converts predictions into **actionable decisions**
-* Determines whether intervention is required
+* Built a RAG pipeline over simulated user feedback (reviews, complaints)
+* Uses embeddings and vector search (ChromaDB)
+* Retrieves relevant behavioral insights
 
----
+Example:
 
-### 🧪 What-if Simulation
+* “Why do users with high price sensitivity abandon?”
 
-* Simulate interventions (e.g., discounts)
-* Compare:
+Combines:
 
-  * Before vs After prediction
-* Estimate effectiveness of actions
-
----
-
-### 📈 Intervention Impact Estimation
-
-* Quantifies expected improvement
-* Avoids unnecessary or ineffective interventions
+* SHAP → individual reasoning
+* RAG → population-level reasoning
 
 ---
 
-### 🤖 LLM-Based Personalization
+### 4. Decision Intelligence Layer
+
+* Converts predictions into actionable decisions
+* Determines whether to intervene and urgency level
+
+---
+
+### 5. What-if Simulation Engine
+
+* Simulates interventions such as discounts
+* Compares before vs after predictions
+* Estimates effectiveness of actions
+
+---
+
+### 6. Intervention Impact Estimation
+
+* Quantifies improvement after intervention
+* Helps avoid unnecessary or ineffective actions
+
+---
+
+### 7. LLM-Powered Personalization
 
 * Uses Gemini API to generate recovery messages
 * Context-aware messaging based on SHAP insights
-* Supports multiple strategies:
-
-  * Discount-based
-  * Urgency-based
-  * Value-based
+* Adapts strategy based on user behavior
 
 ---
 
-### 🎯 Confidence Scoring
+### 8. Multi-Page Interactive Dashboard
 
-* Measures model certainty
-* Enables fallback strategies for uncertain predictions
+Organized into three dashboards:
 
----
+Prediction Dashboard
 
-### 🎨 Interactive Dashboard
+* User session input
+* Abandonment probability
+* What-if simulation
 
-* Built using Streamlit
-* Card-based UI for clean visualization
-* Displays:
+Explainability & Diagnosis
 
-  * Prediction
-  * Explanation
-  * Simulation
-  * Recommended action
+* SHAP-based reasoning
+* RAG-powered insights
 
----
+Strategy & Intervention
 
-## 📊 Example Output
-
-* **Prediction:** 0.72 (High abandonment risk)
-* **Key Drivers:** Price sensitivity, low engagement
-* **Simulation:** Discount reduces risk to 0.58
-* **Decision:** Trigger intervention
-* **Output:** Personalized recovery message
+* LLM-generated personalized actions
 
 ---
 
-## 🧪 Tech Stack
+## Example Output
+
+* Prediction: 0.72 (High risk)
+* Key Drivers: Price sensitivity, high bounce rate
+* RAG Insight: Users find prices high and discounts unattractive
+* Simulation: Discount reduces risk to 0.58
+* Action: Trigger intervention
+* Message: Personalized recovery strategy
+
+---
+
+## Tech Stack
 
 * Python
 * XGBoost
 * SHAP
+* LangChain
+* ChromaDB
+* HuggingFace Embeddings
+* Gemini API
+* Pandas / Scikit-learn
 * Streamlit
-* Google Gemini API (LLM)
-* Pandas, Scikit-learn
 
 ---
 
-## 🚀 How to Run
+## Key Learnings
 
-```bash
-git clone <https://github.com/manmohanganesh/cart-abandonment.git>
+* ML must align with business objectives, not just accuracy
+* Explainability is critical for trust and actionability
+* Prediction alone is insufficient — systems must decide and act
+* Combining ML, RAG, and LLM enables context-aware intelligence
+* Simulation helps estimate real-world impact before execution
+
+---
+
+## How to Run
+
+```
+git clone <repo>
 cd cart-abandonment-system
 
 pip install -r requirements.txt
-```
 
-Create a `.env` file:
+# Add API keys
+touch .env
+# GEMINI_API_KEY=your_key
+# HF_TOKEN=optional
 
-```
-GEMINI_API_KEY=your_api_key_here
-```
-
-Run the pipeline:
-
-```bash
 python -m src.main
-```
-
-Launch the app:
-
-```bash
 streamlit run app/streamlit_app.py
 ```
 
 ---
 
-## 🧠 Key Learnings
+## Project Structure
 
-* ML systems must align with **business objectives**, not just accuracy
-* Explainability enables **trust and actionable insights**
-* Prediction alone is insufficient — systems must **decide and act**
-* Combining ML + LLM unlocks **intelligent automation**
+```
+cart-abandonment-system/
+│
+├── data/
+│   ├── raw/
+│   ├── processed/
+│   └── external/
+│
+├── src/
+│   ├── data/
+│   ├── models/
+│   ├── rag/
+│   └── recovery/
+│
+├── app/
+│   ├── streamlit_app.py
+│   └── pages/
+│       ├── 1_Prediction.py
+│       ├── 2_Explainability.py
+│       └── 3_Strategy.py
+│
+├── configs/
+├── tests/
+├── requirements.txt
+└── README.md
+```
 
 ---
 
-## 🔮 Future Improvements
+## Resume Impact
 
-* Real-time streaming inference
+Built an end-to-end cart abandonment intelligence system combining XGBoost, SHAP explainability, RAG-based behavioral diagnosis, and LLM-driven personalization, enabling prediction, reasoning, simulation, and actionable intervention.
+
+---
+
+## Interview Pitch
+
+Most systems treat cart abandonment as a notification problem. This system approaches it as a decision intelligence problem. It predicts abandonment using XGBoost, explains why using SHAP, diagnoses behavioral patterns using RAG, simulates interventions like discounts, and generates personalized recovery messages using an LLM. The focus is on moving from prediction to action through context-aware decisions tailored to each user.
+
+---
+
+## Future Improvements
+
+* Real-time data pipeline integration
 * A/B testing for intervention strategies
-* Reinforcement learning for optimal decision policies
-* Cloud deployment (AWS / GCP)
+* Reinforcement learning for optimal decision-making
+* Deployment (AWS / GCP)
+* API layer for production use
 
 ---
 
-## 💼 Author
+## Final Thought
 
-Built as a portfolio project to demonstrate **end-to-end ML system design**, combining prediction, explainability, and AI-driven personalization.
+This project demonstrates the shift from:
+
+Prediction → Decision Intelligence → Actionable AI Systems
