@@ -211,18 +211,6 @@ cart-abandonment-system/
 
 ---
 
-## Resume Impact
-
-Built an end-to-end cart abandonment intelligence system combining XGBoost, SHAP explainability, RAG-based behavioral diagnosis, and LLM-driven personalization, enabling prediction, reasoning, simulation, and actionable intervention.
-
----
-
-## Interview Pitch
-
-Most systems treat cart abandonment as a notification problem. This system approaches it as a decision intelligence problem. It predicts abandonment using XGBoost, explains why using SHAP, diagnoses behavioral patterns using RAG, simulates interventions like discounts, and generates personalized recovery messages using an LLM. The focus is on moving from prediction to action through context-aware decisions tailored to each user.
-
----
-
 ## Future Improvements
 
 * Real-time data pipeline integration
