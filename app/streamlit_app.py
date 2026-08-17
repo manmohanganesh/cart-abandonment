@@ -1,14 +1,13 @@
 import streamlit as st
 
-st.set_page_config(page_title="Cart Abandonment AI", layout="wide")
-
-st.title("🛒 Cart Abandonment Intelligence System")
-
 st.set_page_config(
     page_title="Cart Abandonment AI",
     layout="wide",
     initial_sidebar_state="expanded"   
 )
+
+st.title("🛒 Cart Abandonment Intelligence System")
+
 
 st.markdown("""
 ### Multi-layer AI system:
