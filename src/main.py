@@ -12,10 +12,10 @@ from src.models.explain import (
     plot_feature_importance,
 )
 from src.models.train import train_model
-from src.recovery.generator import generate_message, generate_message_llm
 from src.rag.chain import generate_rag_answer
-from src.rag.ingest import load_documents,create_vector_store
+from src.rag.ingest import create_vector_store, load_documents
 from src.rag.retriever import retrieve_context
+from src.recovery.generator import generate_message, generate_message_llm
 
 
 def main():
