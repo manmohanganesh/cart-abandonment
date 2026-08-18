@@ -1,4 +1,5 @@
-from openai import OpenAI
+from openai import OpenAI, OpenAIError
+
 from src.env import get_env_variable
 
 
@@ -71,7 +72,6 @@ def generate_message_llm(shap_dict, config=None):
         client = setup_groq()
         prompt = build_prompt(shap_dict)
 
-        # Uses the active Groq production model
         response = client.chat.completions.create(
             model="openai/gpt-oss-120b",
             messages=[{"role": "user", "content": prompt}],
@@ -79,6 +79,7 @@ def generate_message_llm(shap_dict, config=None):
 
         return response.choices[0].message.content.strip()
 
-    except Exception as e:
-        print(f"LLM failed: {e}")
+    except OpenAIError as e:
+        print(f"LLM API failed: {e}")
         return generate_message(shap_dict)  # Fallback option
+
