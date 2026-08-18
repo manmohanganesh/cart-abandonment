@@ -1,16 +1,17 @@
-from google import genai
+from openai import OpenAI
+
 from src.env import get_env_variable
 
-def setup_llm():
-    api_key = get_env_variable("GEMINI_API_KEY")
-    client = genai.Client(api_key=api_key)
-    return client
 
-def generate_rag_answer(context,query):
-    client = setup_llm()
-    
+def generate_rag_answer(context, query):
+    api_key = get_env_variable("GROQ_API_KEY")
+
+    client = OpenAI(
+        base_url="https://api.groq.com/openai/v1",
+        api_key=api_key,
+    )
+
     context_text = "\n".join(context)
-
     prompt = f"""
 You are analyzing why users abandon carts.
 
@@ -22,9 +23,10 @@ Question:
 
 Answer in 2-3 concise bullet points.
 """
-    response = client.models.generate_content(
-        model = "models/gemini-flash-lite-latest",
-        contents=prompt,
+
+    response = client.chat.completions.create(
+        model="openai/gpt-oss-120b",
+        messages=[{"role": "user", "content": prompt}],
     )
-    
-    return response.text.strip()
+
+    return response.choices[0].message.content.strip()

@@ -1,6 +1,7 @@
-from langchain_text_splitters import CharacterTextSplitter
-from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
+from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_text_splitters import CharacterTextSplitter
+
 
 def load_documents(file_path):
     with open(file_path,"r",encoding="utf-8") as f:
