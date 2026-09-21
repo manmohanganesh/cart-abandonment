@@ -1,5 +1,7 @@
-import pandas as pd
 from pathlib import Path
+
+import pandas as pd
+
 
 def load_raw_data(config:dict) ->pd.DataFrame:
     raw_path = config['data']['raw_path']

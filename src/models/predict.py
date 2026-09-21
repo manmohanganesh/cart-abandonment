@@ -1,10 +1,13 @@
-import sys
 import os
+import sys
+
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-import pandas as pd
 import joblib
+import pandas as pd
+
 from src.data.features import basic_feature_engineering
+
 
 def load_model():
     model = joblib.load("models/model.pkl")

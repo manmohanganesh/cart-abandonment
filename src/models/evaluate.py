@@ -1,5 +1,10 @@
-from sklearn.metrics import accuracy_score,classification_report,precision_recall_curve
 import matplotlib.pyplot as plt
+from sklearn.metrics import (
+    accuracy_score,
+    classification_report,
+    precision_recall_curve,
+)
+
 
 def evaluate_model(model,X_test,y_test,threshold=0.5):
     

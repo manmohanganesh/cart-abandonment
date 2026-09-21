@@ -1,6 +1,7 @@
 import joblib
 from xgboost import XGBClassifier
 
+
 def train_model(X_train,y_train):
     model = XGBClassifier(
         n_estimators=100,

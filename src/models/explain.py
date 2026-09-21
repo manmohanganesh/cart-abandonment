@@ -1,5 +1,6 @@
-import shap
 import matplotlib.pyplot as plt
+import shap
+
 
 def plot_shap_bar(shap_values):
     fig, ax = plt.subplots()

@@ -15,4 +15,4 @@ def setup_logger(config: dict):
         level=level,
         format=fmt,
     )
-    return logger
+    return logger 

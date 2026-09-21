@@ -11,4 +11,4 @@ data:
 
 llm:
   provider: gemini
-  model: models/gemini-flash-lite-latest
+  model: models/gemini-flash-lite-latest 
