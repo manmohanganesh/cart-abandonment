@@ -1,15 +1,17 @@
-import sys
 import os
+import sys
+
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 
 import pandas as pd
 import streamlit as st
 
-from src.models.predict import load_model, predict
 from src.models.explain import compute_shap_values, get_shap_dict, plot_shap_bar
-from src.rag.ingest import load_documents, create_vector_store
-from src.rag.retriever import retrieve_context
+from src.models.predict import load_model, predict
 from src.rag.chain import generate_rag_answer
+from src.rag.ingest import create_vector_store, load_documents
+from src.rag.retriever import retrieve_context
+
 
 @st.cache_resource
 def setup():
