@@ -7,7 +7,11 @@ def load_documents(file_path):
     with open(file_path,"r",encoding="utf-8") as f:
         text = f.read()
 
-    splitter = CharacterTextSplitter(chunk_size=100,chunk_overlap=20)
+    splitter = CharacterTextSplitter(
+        separator="\n",
+        chunk_size=500,
+        chunk_overlap=100
+        )
     docs = splitter.split_text(text)
 
     return docs

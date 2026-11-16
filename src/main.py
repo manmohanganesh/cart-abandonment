@@ -28,17 +28,14 @@ def main():
     docs=load_documents("data/external/reviews.txt")
     vectorstore = create_vector_store(docs)
 
-    query = "Why do users abandon due to price?"
-
-    context = retrieve_context(vectorstore,query)
-    
-    answer = generate_rag_answer(context,query)
-
-    print("\nRAG ANSWER:\n",answer)
-
     env = get_env_variable("ENV")
     logger.info(f"Starting {config['project']['name']} in {env} mode..\n\n")
-
+    
+    query = input("Ask your question please?\n") 
+    context = retrieve_context(vectorstore,query)
+    answer = generate_rag_answer(context,query)
+    print("\nRAG ANSWER:\n",answer)
+    
     df = load_raw_data(config)
     logger.info(f"Loaded data with shape : {df.shape}\n\n")
 
@@ -51,9 +48,9 @@ def main():
     
     model= train_model(X_train,y_train)
     for t in thresholds:
-        accuracy,report=evaluate_model(model,X_test,y_test,threshold=t)
+        accuracy,report=evaluate_model(model,X_test,y_test,t)
         logger.info(f"AT THRESHOLD: {t}")
-        logger.info(f"Accuracy :{accuracy}")
+        logger.info(f"Accuracy :{accuracy*100:.2f}%")
         logger.info(f"\n{report}\n\n")
     
     plot_precision_recall(model,X_test,y_test)

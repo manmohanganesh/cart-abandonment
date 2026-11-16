@@ -6,7 +6,7 @@ from sklearn.metrics import (
 )
 
 
-def evaluate_model(model,X_test,y_test,threshold=0.5):
+def evaluate_model(model,X_test,y_test,threshold):
     
     #Getting probabilities for class 1
     y_probs = model.predict_proba(X_test)[:,1]

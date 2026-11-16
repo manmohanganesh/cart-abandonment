@@ -43,7 +43,6 @@ input_df = pd.DataFrame({
 if st.button("Explain"):
 
     pred, processed_df = predict(model, columns, input_df)
-
     shap_values = compute_shap_values(model, processed_df)
     shap_dict = get_shap_dict(shap_values, processed_df)
 
