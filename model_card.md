@@ -267,7 +267,7 @@ scale_pos_weight: auto  # Computed as neg/pos ratio (~5.3)
 
 ## Contact & Governance
 
-**Author:** [Your Name]  
+**Author:** Manmohan Ganesan  
 **Role:** ML Engineer / Data Scientist  
 **Review Date:** 2026-11-16  
 **Next Review:** 2027-02-16  
