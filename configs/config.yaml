@@ -1,14 +1,167 @@
 # configs/config.yaml
 project:
   name: "cart-abandonment-system"
+  version: "0.1.0"
 
 logging:
-  level: INFO
-  format: "{time:DD-MM-YYYY HH:mm:ss} | {level} | {message}" 
+  level: "INFO"
+  format: "{time:DD-MM-YYYY HH:mm:ss} | {level} | {message}"
 
 data:
-  raw_path: data/raw_data/online_shoppers_intention.csv
+  raw_path: "data/raw_data/online_shoppers_intention.csv"
+  test_size: 0.2
+  val_size: 0.1
+  random_state: 42
+  stratify: true
+  feature_engineering:
+    low_engagement_pages_threshold: 3
+    low_engagement_duration_threshold: 60
+    session_stage_bins: [-1, 3, 10, 999999]
+    session_stage_labels: ["early", "mid", "late"]
 
-llm:
-  provider: gemini
-  model: models/gemini-flash-lite-latest 
+model:
+  xgboost:
+    n_estimators: 100
+    max_depth: 5
+    learning_rate: 0.1
+    subsample: 0.8
+    colsample_bytree: 0.8
+    random_state: 42
+    eval_metric: "logloss"
+    scale_pos_weight: null  # auto-compute from class ratio if null
+  thresholds: [0.5, 0.4, 0.3, 0.2]
+  evaluation:
+    sample_size_for_shap: 200
+    shap_top_n: 5
+
+rag:
+  embeddings:
+    model_name: "sentence-transformers/all-MiniLM-L6-v2"
+  text_splitter:
+    chunk_size: 500
+    chunk_overlap: 100
+    separator: "\n"
+  retriever:
+    k: 3
+  vectorstore:
+    persist_directory: "data/vectorstore/chroma_db"
+    collection_name: "cart_abandonment_reviews"
+  llm:
+    provider: "groq"
+    base_url: "https://api.groq.com/openai/v1"
+    model: "openai/gpt-oss-120b"
+    temperature: 0.7
+    max_tokens: 500
+  prompts:
+    rag_system: "You are analyzing why users abandon carts."
+    rag_answer_format: "Answer in 2-3 concise bullet points."
+
+recovery:
+  llm:
+    provider: "groq"
+    base_url: "https://api.groq.com/openai/v1"
+    model: "openai/gpt-oss-120b"
+    temperature: 0.8
+    max_tokens: 300
+  prompts:
+    strategies_count: 3
+    strategy_types:
+      - "Discount-based (price sensitivity)"
+      - "Urgency-based (fear of missing out)"
+      - "Value-based (highlight product benefit)"
+    message_max_lines: 2
+
+simulation:
+  ab_test:
+    enabled: true
+    n_simulations: 1000
+    discount_range: [5, 10, 15, 20, 25]
+    strategy_types:
+      - "discount"
+      - "urgency"
+      - "value"
+    metric: "expected_revenue_recovery"
+
+model_card:
+  intended_use: "Predict cart abandonment probability for e-commerce sessions to trigger personalized recovery interventions"
+  limitations:
+    - "Trained on UCI Online Shoppers Intention dataset (12k sessions, 2018) - may not generalize to current traffic patterns"
+    - "No real price sensitivity or scroll depth features - uses behavioral proxies only"
+    - "Binary classification only - no revenue magnitude prediction"
+    - "RAG corpus is synthetic (100 simulated reviews) - not real user feedback"
+    - "What-if simulation assumes linear discount effect - not causally validated"
+    - "Model miscalibrated: predicts 73.7% conversion vs actual 15.5% - needs calibration before production"
+    - "A/B test simulation has probability inversion bug - results invalid until fixed"
+  fairness_checks:
+    - "No protected attributes (age, gender, location) in features"
+    - "VisitorType (New/Returning) included - monitor for disparate impact"
+    - "Weekend vs Weekday included - check calibration across segments"
+  training_data:
+    source: "UCI ML Repository - Online Shoppers Intention"
+    size: 12330
+    features: 18 (10 numerical, 8 categorical) -> 33 after one-hot encoding
+    target_balance: "15.8% Revenue=True, 84.2% Revenue=False"
+    collection_period: "12-month period in 2018"
+    train_size: 8631
+    val_size: 1233
+    test_size: 2466
+  model_details:
+    algorithm: "XGBoost"
+    version: "3.4.1"
+    hyperparameters: "n_estimators=100, max_depth=5, learning_rate=0.1, subsample=0.8, colsample_bytree=0.8, scale_pos_weight=auto (~5.3)"
+  metrics:
+    validation_best_threshold: 0.50
+    validation_f1_at_best: 0.6610
+    test_accuracy_at_best: 0.8710
+    test_precision_class1_at_best: 0.56
+    test_recall_class1_at_best: 0.80
+    test_f1_class1_at_best: 0.66
+    test_precision_class0_at_best: 0.96
+    test_recall_class0_at_best: 0.88
+    test_f1_class0_at_best: 0.92
+    business_metric: "Expected revenue recovery at threshold=0.5 (requires calibration)"
+  shap_top_features:
+    - "PageValues (negative: -1.985)"
+    - "Month_Mar (negative: -1.255)"
+    - "Month_Nov (negative: -0.483)"
+    - "TrafficType (negative: -0.240)"
+    - "ProductRelated_Duration (positive: 0.216)"
+  ab_test_simulation:
+    status: "buggy - probability inversion"
+    best_strategy: "VALUE - value_boost_10pct"
+    note: "All strategies show negative uplift due to bug. Fix: model outputs P(Revenue=1)=conversion, simulation treats as abandonment=1-P."
+
+streamlit:
+  page_config:
+    page_title: "Cart Abandonment AI"
+    layout: "wide"
+    initial_sidebar_state: "expanded"
+  prediction_defaults:
+    administrative: 2
+    informational: 1
+    product_related: 10
+    administrative_duration: 50
+    informational_duration: 30
+    product_related_duration: 300
+    bounce_rates: 0.2
+    exit_rates: 0.3
+    discount: 0
+  slider_ranges:
+    administrative: [0, 20]
+    informational: [0, 20]
+    product_related: [0, 50]
+    administrative_duration: [0, 500]
+    informational_duration: [0, 500]
+    product_related_duration: [0, 2000]
+    bounce_rates: [0.0, 1.0]
+    exit_rates: [0.0, 1.0]
+    discount: [0, 50]
+
+paths:
+  model_dir: "models"
+  model_file: "model.pkl"
+  columns_file: "columns.pkl"
+  vectorstore_dir: "data/vectorstore/chroma_db"
+  reviews_file: "data/external/reviews.txt"
+  model_card_file: "model_card.md"
+  ab_test_results_file: "data/ab_test_results.json"

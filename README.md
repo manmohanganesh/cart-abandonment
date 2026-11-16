@@ -2,21 +2,32 @@
 
 ## Overview
 
-Most e-commerce systems handle cart abandonment with generic reminders like “You left something in your cart.”
+End-to-end ML system for e-commerce cart abandonment: **predict → explain → diagnose → intervene**.
 
-This project goes beyond that by building a decision intelligence system that:
-
-* Predicts abandonment before it happens
-* Explains why each user is likely to abandon
-* Diagnoses behavioral patterns using RAG
-* Simulates intervention strategies
-* Generates personalized recovery messages
+| Component | Technology | Purpose |
+|-----------|------------|---------|
+| **Prediction** | XGBoost (calibrated) | P(Revenue=1) from session behavior |
+| **Explainability** | SHAP | Per-session feature contributions |
+| **Diagnosis** | RAG (ChromaDB + Groq) | Natural-language driver explanations |
+| **Intervention** | A/B test simulation | Discount/Urgency/Value strategy uplift |
+| **Personalization** | LLM (Groq) | Context-aware recovery messages |
+| **Dashboard** | Streamlit | 3-page interactive UI |
 
 ---
 
-## Key Idea
+## Key Results (2026-11-16)
 
-Don’t just predict abandonment — understand it and act on it intelligently.
+| Metric | Value |
+|--------|-------|
+| **AUC-ROC (uncalibrated)** | 0.7695 |
+| **AUC-ROC (calibrated)** | 0.7117 |
+| **Best threshold (val F1)** | 0.30 (F1=0.914) |
+| **Test accuracy @ 0.30** | 82.24% |
+| **Top SHAP drivers** | ExitRates (+0.45), Month_Mar (-0.28), Month_Nov (-0.25) |
+
+**A/B Test Winner:** Discount 25% → **+$17.61/session uplift** (vs. Urgency +$17.04, Value -$0.05)
+
+> **Full metrics, limitations, fairness checks, and known bugs:** [`model_card.md`](model_card.md)
 
 ---
 
@@ -24,159 +35,53 @@ Don’t just predict abandonment — understand it and act on it intelligently.
 
 ```
 User Session Data
-→ Feature Engineering
-→ ML Model (XGBoost)
-→ SHAP Explainability (Why THIS user)
-→ RAG Diagnosis (Why USERS LIKE THIS)
-→ Decision Layer
-→ What-if Simulation
-→ LLM Personalization
-→ Multi-page Streamlit Dashboard
+→ Feature Engineering (7 engineered features, NO simulated/leaky features)
+→ XGBoost + Isotonic Calibration
+→ SHAP Explainer (global + local)
+→ RAG over User Reviews (ChromaDB persisted)
+→ A/B Test Simulation (3 strategies × intensity levels)
+→ LLM Recovery Message Generator (Groq)
+→ Streamlit Dashboard (3 pages)
 ```
 
 ---
 
-## Features
+## ML Correctness Fixes Applied
 
-### 1. Predictive Modeling
-
-* XGBoost classifier trained on session behavior
-* Threshold tuning focused on business impact
-* Optimized for high recall to minimize lost conversions
-
----
-
-### 2. Explainability (SHAP)
-
-* Global and local feature importance
-* Per-user reasoning
-* Identifies drivers like:
-
-  * Price sensitivity
-  * Engagement levels
-  * Exit behavior
+- ❌ **Removed simulated features:** `scroll_depth` (was random), `price_sensitivity` (was PageValues proxy)
+- ❌ **Removed leakage:** `PageValues` (post-purchase signal) dropped from features
+- ✅ **Class imbalance:** `scale_pos_weight=auto` (~5.3:1)
+- ✅ **Proper splits:** 70% train / 10% val / 20% test (stratified)
+- ✅ **Threshold on validation:** F1-optimized, not test-set tuned
+- ✅ **Calibration:** Isotonic regression on validation set
+- ⚠️ **Known issue:** Model miscalibrated (predicts 73.7% conversion vs 15.5% actual) — needs more data / better calibration
 
 ---
 
-### 3. Diagnosis with RAG (Retrieval-Augmented Generation)
+## Quickstart
 
-* Built a RAG pipeline over simulated user feedback (reviews, complaints)
-* Uses embeddings and vector search (ChromaDB)
-* Retrieves relevant behavioral insights
-
-Example:
-
-* “Why do users with high price sensitivity abandon?”
-
-Combines:
-
-* SHAP → individual reasoning
-* RAG → population-level reasoning
-
----
-
-### 4. Decision Intelligence Layer
-
-* Converts predictions into actionable decisions
-* Determines whether to intervene and urgency level
-
----
-
-### 5. What-if Simulation Engine
-
-* Simulates interventions such as discounts
-* Compares before vs after predictions
-* Estimates effectiveness of actions
-
----
-
-### 6. Intervention Impact Estimation
-
-* Quantifies improvement after intervention
-* Helps avoid unnecessary or ineffective actions
-
----
-
-### 7. LLM-Powered Personalization
-
-* Uses Gemini API to generate recovery messages
-* Context-aware messaging based on SHAP insights
-* Adapts strategy based on user behavior
-
----
-
-### 8. Multi-Page Interactive Dashboard
-
-Organized into three dashboards:
-
-Prediction Dashboard
-
-* User session input
-* Abandonment probability
-* What-if simulation
-
-Explainability & Diagnosis
-
-* SHAP-based reasoning
-* RAG-powered insights
-
-Strategy & Intervention
-
-* LLM-generated personalized actions
-
----
-
-## Example Output
-
-* Prediction: 0.72 (High risk)
-* Key Drivers: Price sensitivity, high bounce rate
-* RAG Insight: Users find prices high and discounts unattractive
-* Simulation: Discount reduces risk to 0.58
-* Action: Trigger intervention
-* Message: Personalized recovery strategy
-
----
-
-## Tech Stack
-
-* Python
-* XGBoost
-* SHAP
-* LangChain
-* ChromaDB
-* HuggingFace Embeddings
-* Gemini API
-* Pandas / Scikit-learn
-* Streamlit
-
----
-
-## Key Learnings
-
-* ML must align with business objectives, not just accuracy
-* Explainability is critical for trust and actionability
-* Prediction alone is insufficient — systems must decide and act
-* Combining ML, RAG, and LLM enables context-aware intelligence
-* Simulation helps estimate real-world impact before execution
-
----
-
-## How to Run
-
-```
+```bash
 git clone <repo>
 cd cart-abandonment-system
 
+# Install dependencies
 pip install -r requirements.txt
 
-# Add API keys
-touch .env
-# GEMINI_API_KEY=your_key
-# HF_TOKEN=optional
+# Configure API keys (copy .env.example → .env)
+cp .env.example .env
+# Edit .env: GROQ_API_KEY=your_key
 
+# Run training + evaluation + A/B simulation
 python -m src.main
+
+# Launch dashboard
 streamlit run app/streamlit_app.py
 ```
+
+**Pages:**
+1. **Prediction** — session inputs → abandonment probability
+2. **Explainability** — SHAP bar plot + RAG diagnosis
+3. **Strategy** — behavioral inputs → LLM recovery messages
 
 ---
 
@@ -184,45 +89,75 @@ streamlit run app/streamlit_app.py
 
 ```
 cart-abandonment-system/
-│
-├── data/
-│   ├── raw/
-│   ├── processed/
-│   └── external/
-│
-├── src/
-│   ├── data/
-│   ├── models/
-│   ├── rag/
-│   └── recovery/
-│
 ├── app/
 │   ├── streamlit_app.py
 │   └── pages/
 │       ├── 1_Prediction.py
 │       ├── 2_Explainability.py
 │       └── 3_Strategy.py
-│
 ├── configs/
-├── tests/
+│   └── config.yaml          # All hyperparams, paths, prompts
+├── data/
+│   ├── raw_data/
+│   ├── external/reviews.txt
+│   └── vectorstore/chroma_db/
+├── models/
+│   ├── model.pkl
+│   └── columns.pkl
+├── src/
+│   ├── config.py            # Config class with dot notation
+│   ├── services.py          # Shared singletons (model, vectorstore)
+│   ├── data/
+│   │   ├── loader.py
+│   │   ├── features.py      # 7 engineered features
+│   │   └── preprocess.py    # 70/10/20 split + scaling
+│   ├── models/
+│   │   ├── train.py         # XGBoost + class imbalance
+│   │   ├── predict.py
+│   │   ├── evaluate.py      # AUC, calibration, thresholds
+│   │   └── explain.py       # SHAP
+│   ├── rag/
+│   │   ├── ingest.py        # ChromaDB (persisted)
+│   │   ├── retriever.py
+│   │   └── chain.py         # Groq LLM
+│   ├── recovery/
+│   │   └── generator.py     # Rule-based + LLM messages
+│   ├── simulation/
+│   │   └── ab_test.py       # Discount/Urgency/Value uplift
+│   ├── main.py              # End-to-end pipeline
+│   └── logger.py / env.py
+├── model_card.md            # Model card (metrics, limits, fairness)
 ├── requirements.txt
 └── README.md
 ```
 
 ---
 
-## Future Improvements
+## Tech Stack
 
-* Real-time data pipeline integration
-* A/B testing for intervention strategies
-* Reinforcement learning for optimal decision-making
-* Deployment (AWS / GCP)
-* API layer for production use
+- **ML:** XGBoost, scikit-learn, SHAP, isotonic calibration
+- **RAG:** LangChain, ChromaDB (persisted), sentence-transformers
+- **LLM:** Groq API (`openai/gpt-oss-120b`)
+- **Dashboard:** Streamlit
+- **Config:** YAML + typed `Config` class
 
 ---
 
-## Final Thought
+## What This Demonstrates
 
-This project demonstrates the shift from:
+- **ML Engineering:** Proper splits, calibration, leakage prevention, class imbalance
+- **Explainability:** SHAP global/local + RAG population-level diagnosis
+- **Decision Intelligence:** A/B simulation with revenue estimation
+- **Production Thinking:** Config-driven, persisted vectorstore, shared services, model card
+- **Honest Documentation:** Known bugs (miscalibration, simulation limits) in model card
 
-Prediction → Decision Intelligence → Actionable AI Systems
+---
+
+## Future Work
+
+- [ ] Better calibration (more data / Platt scaling comparison)
+- [ ] Causal uplift modeling (not heuristic simulation)
+- [ ] Real user feedback corpus (replace synthetic reviews)
+- [ ] FastAPI service layer for production serving
+- [ ] Drift detection & automated retraining pipeline
+- [ ] A/B test framework for live intervention experiments
