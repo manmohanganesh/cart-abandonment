@@ -10,7 +10,12 @@ from src.config import load_config
 from src.models.explain import compute_shap_values, get_shap_dict, plot_shap_bar
 from src.models.predict import predict
 from src.rag.chain import generate_rag_answer
-from src.services import get_config_cached, get_model_cached, get_vectorstore_cached, get_rag_context
+from src.services import (
+    get_config_cached,
+    get_model_cached,
+    get_rag_context,
+    get_vectorstore_cached,
+)
 
 config = get_config_cached()
 model, columns = get_model_cached()

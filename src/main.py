@@ -5,14 +5,14 @@ from src.data.preprocess import prepare_data
 from src.env import get_env_variable, load_env
 from src.logger import setup_logger
 from src.models.evaluate import (
-    evaluate_model,
-    plot_precision_recall,
-    find_best_threshold,
     calibrate_model,
-    compute_auc_roc,
     compute_auc_pr,
-    plot_calibration_curve,
+    compute_auc_roc,
+    evaluate_model,
+    find_best_threshold,
     get_threshold_metrics,
+    plot_calibration_curve,
+    plot_precision_recall,
 )
 from src.models.explain import (
     compute_shap_values,
@@ -25,8 +25,12 @@ from src.rag.chain import generate_rag_answer
 from src.rag.ingest import create_vector_store, load_documents
 from src.rag.retriever import retrieve_context
 from src.recovery.generator import generate_message, generate_message_llm
-from src.simulation.ab_test import run_ab_test_simulation, save_ab_test_results, print_ab_test_summary
 from src.services import clear_cache
+from src.simulation.ab_test import (
+    print_ab_test_summary,
+    run_ab_test_simulation,
+    save_ab_test_results,
+)
 
 
 def main():

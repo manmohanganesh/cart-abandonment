@@ -1,141 +1,141 @@
 {
-  "base_conversion_rate": 0.14785752268219365,
-  "base_abandonment_rate": 0.8521424773178063,
+  "base_conversion_rate": 0.14629021861399522,
+  "base_abandonment_rate": 0.8537097813860048,
   "strategies": {
     "discount": {
       "discount_5pct": {
         "discount_pct": 5,
-        "mean_conversion_after": 0.23307177041397428,
-        "mean_abandonment_after": 0.7669282295860257,
-        "base_expected_revenue_per_session": 14.785752268219367,
-        "intervention_expected_revenue_per_session": 18.30717704139743,
-        "uplift_per_session": 3.5214247731780635,
-        "total_uplift": 3521.4247731780633,
-        "sessions_improved": 999
+        "mean_conversion_after": 0.23166119675259572,
+        "mean_abandonment_after": 0.7683388032474043,
+        "base_expected_revenue_per_session": 14.629021861399524,
+        "intervention_expected_revenue_per_session": 18.166119675259573,
+        "uplift_per_session": 3.5370978138600484,
+        "total_uplift": 3537.0978138600485,
+        "sessions_improved": 1000
       },
       "discount_10pct": {
         "discount_pct": 10,
-        "mean_conversion_after": 0.31828601814575497,
-        "mean_abandonment_after": 0.681713981854245,
-        "base_expected_revenue_per_session": 14.785752268219367,
-        "intervention_expected_revenue_per_session": 21.828601814575492,
-        "uplift_per_session": 7.042849546356127,
-        "total_uplift": 7042.849546356127,
-        "sessions_improved": 999
+        "mean_conversion_after": 0.31703217489119623,
+        "mean_abandonment_after": 0.6829678251088038,
+        "base_expected_revenue_per_session": 14.629021861399524,
+        "intervention_expected_revenue_per_session": 21.70321748911962,
+        "uplift_per_session": 7.074195627720095,
+        "total_uplift": 7074.195627720095,
+        "sessions_improved": 1000
       },
       "discount_15pct": {
         "discount_pct": 15,
-        "mean_conversion_after": 0.40350026587753557,
-        "mean_abandonment_after": 0.5964997341224645,
-        "base_expected_revenue_per_session": 14.785752268219367,
-        "intervention_expected_revenue_per_session": 25.350026587753558,
-        "uplift_per_session": 10.56427431953419,
-        "total_uplift": 10564.27431953419,
-        "sessions_improved": 999
+        "mean_conversion_after": 0.4024031530297967,
+        "mean_abandonment_after": 0.5975968469702034,
+        "base_expected_revenue_per_session": 14.629021861399524,
+        "intervention_expected_revenue_per_session": 25.240315302979667,
+        "uplift_per_session": 10.611293441580143,
+        "total_uplift": 10611.293441580143,
+        "sessions_improved": 1000
       },
       "discount_20pct": {
         "discount_pct": 20,
-        "mean_conversion_after": 0.4887145136093162,
-        "mean_abandonment_after": 0.5112854863906838,
-        "base_expected_revenue_per_session": 14.785752268219367,
-        "intervention_expected_revenue_per_session": 28.87145136093162,
-        "uplift_per_session": 14.085699092712254,
-        "total_uplift": 14085.699092712253,
-        "sessions_improved": 999
+        "mean_conversion_after": 0.4877741311683972,
+        "mean_abandonment_after": 0.5122258688316028,
+        "base_expected_revenue_per_session": 14.629021861399524,
+        "intervention_expected_revenue_per_session": 28.777413116839714,
+        "uplift_per_session": 14.14839125544019,
+        "total_uplift": 14148.39125544019,
+        "sessions_improved": 1000
       },
       "discount_25pct": {
         "discount_pct": 25,
-        "mean_conversion_after": 0.5739287613410969,
-        "mean_abandonment_after": 0.4260712386589032,
-        "base_expected_revenue_per_session": 14.785752268219367,
-        "intervention_expected_revenue_per_session": 32.392876134109684,
-        "uplift_per_session": 17.607123865890316,
-        "total_uplift": 17607.123865890317,
-        "sessions_improved": 999
+        "mean_conversion_after": 0.5731451093069977,
+        "mean_abandonment_after": 0.42685489069300236,
+        "base_expected_revenue_per_session": 14.629021861399524,
+        "intervention_expected_revenue_per_session": 32.31451093069976,
+        "uplift_per_session": 17.68548906930024,
+        "total_uplift": 17685.489069300238,
+        "sessions_improved": 1000
       }
     },
     "urgency": {
       "urgency_boost_5pct": {
         "urgency_boost": 0.05,
-        "mean_conversion_after": 0.19046464654808398,
-        "mean_abandonment_after": 0.8095353534519161,
-        "base_expected_revenue_per_session": 14.785752268219367,
-        "intervention_expected_revenue_per_session": 19.0464646548084,
-        "uplift_per_session": 4.260712386589032,
-        "total_uplift": 4260.712386589032,
+        "mean_conversion_after": 0.18897570768329547,
+        "mean_abandonment_after": 0.8110242923167046,
+        "base_expected_revenue_per_session": 14.629021861399524,
+        "intervention_expected_revenue_per_session": 18.897570768329548,
+        "uplift_per_session": 4.2685489069300235,
+        "total_uplift": 4268.548906930024,
         "sessions_improved": 1000
       },
       "urgency_boost_10pct": {
         "urgency_boost": 0.1,
-        "mean_conversion_after": 0.23307177041397428,
-        "mean_abandonment_after": 0.7669282295860257,
-        "base_expected_revenue_per_session": 14.785752268219367,
-        "intervention_expected_revenue_per_session": 23.30717704139743,
-        "uplift_per_session": 8.521424773178063,
-        "total_uplift": 8521.424773178063,
+        "mean_conversion_after": 0.23166119675259572,
+        "mean_abandonment_after": 0.7683388032474043,
+        "base_expected_revenue_per_session": 14.629021861399524,
+        "intervention_expected_revenue_per_session": 23.166119675259573,
+        "uplift_per_session": 8.537097813860047,
+        "total_uplift": 8537.097813860048,
         "sessions_improved": 1000
       },
       "urgency_boost_15pct": {
         "urgency_boost": 0.15,
-        "mean_conversion_after": 0.2756788942798646,
-        "mean_abandonment_after": 0.7243211057201354,
-        "base_expected_revenue_per_session": 14.785752268219367,
-        "intervention_expected_revenue_per_session": 27.56788942798646,
-        "uplift_per_session": 12.782137159767094,
-        "total_uplift": 12782.137159767095,
+        "mean_conversion_after": 0.2743466858218959,
+        "mean_abandonment_after": 0.725653314178104,
+        "base_expected_revenue_per_session": 14.629021861399524,
+        "intervention_expected_revenue_per_session": 27.434668582189595,
+        "uplift_per_session": 12.80564672079007,
+        "total_uplift": 12805.646720790071,
         "sessions_improved": 1000
       },
       "urgency_boost_20pct": {
         "urgency_boost": 0.2,
-        "mean_conversion_after": 0.31828601814575497,
-        "mean_abandonment_after": 0.681713981854245,
-        "base_expected_revenue_per_session": 14.785752268219367,
-        "intervention_expected_revenue_per_session": 31.828601814575492,
-        "uplift_per_session": 17.042849546356127,
-        "total_uplift": 17042.849546356127,
+        "mean_conversion_after": 0.31703217489119623,
+        "mean_abandonment_after": 0.6829678251088038,
+        "base_expected_revenue_per_session": 14.629021861399524,
+        "intervention_expected_revenue_per_session": 31.70321748911962,
+        "uplift_per_session": 17.074195627720094,
+        "total_uplift": 17074.195627720095,
         "sessions_improved": 1000
       }
     },
     "value": {
       "value_boost_10pct": {
         "engagement_boost": 0.1,
-        "mean_conversion_after": 0.14733287447980836,
-        "mean_abandonment_after": 0.8526671255201915,
-        "base_expected_revenue_per_session": 14.785752268219367,
-        "intervention_expected_revenue_per_session": 14.733287447980837,
-        "uplift_per_session": -0.05246482023852875,
-        "total_uplift": -52.464820238528745,
-        "sessions_improved": 365
+        "mean_conversion_after": 0.14401738738869319,
+        "mean_abandonment_after": 0.8559826126113069,
+        "base_expected_revenue_per_session": 14.629021861399524,
+        "intervention_expected_revenue_per_session": 14.401738738869318,
+        "uplift_per_session": -0.22728312253020705,
+        "total_uplift": -227.28312253020704,
+        "sessions_improved": 212
       },
       "value_boost_15pct": {
         "engagement_boost": 0.15,
-        "mean_conversion_after": 0.14607397759213347,
-        "mean_abandonment_after": 0.8539260224078666,
-        "base_expected_revenue_per_session": 14.785752268219367,
-        "intervention_expected_revenue_per_session": 14.607397759213345,
-        "uplift_per_session": -0.1783545090060215,
-        "total_uplift": -178.35450900602152,
-        "sessions_improved": 356
+        "mean_conversion_after": 0.14218322636489752,
+        "mean_abandonment_after": 0.8578167736351024,
+        "base_expected_revenue_per_session": 14.629021861399524,
+        "intervention_expected_revenue_per_session": 14.218322636489756,
+        "uplift_per_session": -0.4106992249097675,
+        "total_uplift": -410.6992249097675,
+        "sessions_improved": 222
       },
       "value_boost_20pct": {
         "engagement_boost": 0.2,
-        "mean_conversion_after": 0.14614428131516324,
-        "mean_abandonment_after": 0.8538557186848367,
-        "base_expected_revenue_per_session": 14.785752268219367,
-        "intervention_expected_revenue_per_session": 14.614428131516325,
-        "uplift_per_session": -0.17132413670304225,
-        "total_uplift": -171.32413670304226,
-        "sessions_improved": 359
+        "mean_conversion_after": 0.14131948735490443,
+        "mean_abandonment_after": 0.8586805126450956,
+        "base_expected_revenue_per_session": 14.629021861399524,
+        "intervention_expected_revenue_per_session": 14.131948735490441,
+        "uplift_per_session": -0.4970731259090825,
+        "total_uplift": -497.0731259090825,
+        "sessions_improved": 215
       },
       "value_boost_25pct": {
         "engagement_boost": 0.25,
-        "mean_conversion_after": 0.1464175417083432,
-        "mean_abandonment_after": 0.8535824582916568,
-        "base_expected_revenue_per_session": 14.785752268219367,
-        "intervention_expected_revenue_per_session": 14.64175417083432,
-        "uplift_per_session": -0.143998097385047,
-        "total_uplift": -143.998097385047,
-        "sessions_improved": 371
+        "mean_conversion_after": 0.14094312969921158,
+        "mean_abandonment_after": 0.8590568703007885,
+        "base_expected_revenue_per_session": 14.629021861399524,
+        "intervention_expected_revenue_per_session": 14.094312969921157,
+        "uplift_per_session": -0.5347088914783672,
+        "total_uplift": -534.7088914783671,
+        "sessions_improved": 213
       }
     }
   },
@@ -143,12 +143,12 @@
     "strategy": "discount",
     "variant": "discount_25pct",
     "discount_pct": 25,
-    "mean_conversion_after": 0.5739287613410969,
-    "mean_abandonment_after": 0.4260712386589032,
-    "base_expected_revenue_per_session": 14.785752268219367,
-    "intervention_expected_revenue_per_session": 32.392876134109684,
-    "uplift_per_session": 17.607123865890316,
-    "total_uplift": 17607.123865890317,
-    "sessions_improved": 999
+    "mean_conversion_after": 0.5731451093069977,
+    "mean_abandonment_after": 0.42685489069300236,
+    "base_expected_revenue_per_session": 14.629021861399524,
+    "intervention_expected_revenue_per_session": 32.31451093069976,
+    "uplift_per_session": 17.68548906930024,
+    "total_uplift": 17685.489069300238,
+    "sessions_improved": 1000
   }
 }
