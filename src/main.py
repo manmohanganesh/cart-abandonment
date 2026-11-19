@@ -84,8 +84,10 @@ def main():
     logger.info(f"AUC-PR (calibrated): {auc_pr_cal:.4f}\n")
 
     # Calibration curve
+    '''
     logger.info("Plotting calibration curve...")
     plot_calibration_curve(y_test, calibrated_model.predict_proba(X_test)[:, 1])
+    '''
 
     # Tune threshold on VALIDATION set (not test) - use calibrated model
     logger.info("=== Threshold Tuning on Validation Set (Calibrated) ===")

@@ -16,7 +16,9 @@ def create_vector_store(text: str, config: Config):
     rag_config = config.get("rag", {})
 
     embeddings = HuggingFaceEmbeddings(
-        model_name=rag_config.get("embeddings.model_name", "sentence-transformers/all-MiniLM-L6-v2")
+        model_name = rag_config.get(
+            "embeddings.model_name", 
+            "sentence-transformers/all-MiniLM-L6-v2")
     )
 
     splitter_config = rag_config.get("text_splitter", {})
